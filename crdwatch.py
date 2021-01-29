@@ -1,4 +1,3 @@
-import yaml
 from kubernetes import client, config, watch
 import os
 
@@ -17,20 +16,21 @@ if __name__ == "__main__":
     CRD = info[0]
     DOMAIN = ".".join(info[1:])
     if 'KUBERNETES_PORT' in os.environ:
-       config.load_incluster_config()
+        config.load_incluster_config()
     else:
-       config.load_kube_config()
-    #configuration = client.Configuration()
+        config.load_kube_config()
+    # configuration = client.Configuration()
     # configuration.assert_hostname = False
     # api_client = client.api_client.ApiClient(configuration=configuration)
     api_client = client.api_client.ApiClient()
     v1 = client.CoreV1Api()
     crds = client.CustomObjectsApi(api_client)
-    print("Starting main loop...")
+    print("Starting main loop on %s %s %s..." % (CRD, DOMAIN, VERSION))
     resource_version = ''
     while True:
         print(DOMAIN, VERSION, CRD)
-        stream = watch.Watch().stream(crds.list_cluster_custom_object, DOMAIN, VERSION, CRD, resource_version=resource_version)
+        stream = watch.Watch().stream(crds.list_cluster_custom_object, DOMAIN, VERSION, CRD,
+                                      resource_version=resource_version)
         for event in stream:
             obj = event["object"]
             name = obj['metadata']['name']

@@ -19,5 +19,5 @@ You can run against an existing cluster after setting your KUBECONFIG env variab
 ```
 export CRD=guitars.kool.karmalabs.local
 IMAGE="karmab/crdwatch"
-podman run -v $(dirname $KUBECONFIG):/kubeconfig -e CRD:$CRD -e VERSION:$VERSION -e KUBECONFIG=/kubeconfig/kubeconfig --rm -it karmab/crdwatch
+podman run -v $(dirname $KUBECONFIG):/kubeconfig -e CRD=$CRD -e VERSION=$VERSION -e KUBECONFIG=/kubeconfig/kubeconfig --rm -it karmab/crdwatch
 ```
