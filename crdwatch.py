@@ -9,6 +9,7 @@ VERSION = os.environ.get("VERSION", "v1")
 if __name__ == "__main__":
     if CRD is None:
         print("Missing env variable CRD set as crd.domain")
+        os._exit(1)
     info = CRD.split('.')
     if len(info) == 1:
         print("Incorrect CRD %s" % CRD)
